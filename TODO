@@ -1,0 +1,6 @@
+yum install xrdp
+systemctl start xrdp
+systemctl enable xrdp
+firewall-cmd --permanent --add-port=3389/tcp
+firewall-cmd --reload
+yum install gnome-classic-session gnome-terminal

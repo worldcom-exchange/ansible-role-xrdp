@@ -1,0 +1,5 @@
+---
+xrdp_packages:
+  - xrdp
+xrdp_ports:
+  - 3389/tcp

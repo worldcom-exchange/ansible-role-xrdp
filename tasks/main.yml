@@ -1,0 +1,19 @@
+---
+- name: Install xrdp packages
+  package:
+    name: "{{ xrdp_packages }}"
+    state: present
+
+- name: Firewalld - open rdp ports
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  with_items: "{{ xrdp_ports }}"
+
+- name: Enable and start xrdp service
+  systemd:
+    name: xrdp
+    state: started
+    enabled: yes

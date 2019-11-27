@@ -1,0 +1,14 @@
+galaxy_info:
+  author: smlloyd
+  description: Install xrdp
+  license: "Beerware License"
+  min_ansible_version: 2.7
+  platforms:
+    - name: EL
+      versions:
+        - 8
+    - name: Fedora
+      versions:
+        - all
+  galaxy_tags: []
+dependencies: []
