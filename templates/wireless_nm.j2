@@ -1,0 +1,22 @@
+{# generic WPA2/PSK setup #}
+{# These are installed in /etc/NetworkManager/system-connections #}
+[connection]
+id={{ Wifi.SSID }}
+{# this a random value #}
+uuid={{ Wifi.UUID }}
+type=wifi
+
+[wifi]
+ssid={{ Wifi.SSID }}
+mode=infrastructure
+
+[wifi-security]
+key-mgmt=wpa-psk
+auth-alg=open
+psk={{ Wifi.PSK }}
+
+[ipv4]
+method=auto
+
+[ipv6]
+method=auto

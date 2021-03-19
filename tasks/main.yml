@@ -1,19 +1,52 @@
 ---
-- name: Install xrdp packages
-  package:
-    name: "{{ xrdp_packages }}"
+- name: Install network-manager
+  apt:
+    name: network-manager
     state: present
 
-- name: Firewalld - open rdp ports
-  firewalld:
-    port: "{{ item }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  with_items: "{{ xrdp_ports }}"
+- name: set up wireless configs
+  template:
+    src: wireless_nm.j2
+    dest: /etc/NetworkManager/system-connections/{{ Wifi.SSID }}
+
+- name: setting nm config file permissions
+  file:
+    path: /etc/NetworkManager/system-connections/{{ Wifi.SSID }}
+    owner: root
+    group: root
+    mode: 0600
+
+- name: restart network-manager
+  service:
+    name: network-manager
+    state: restarted
+
+- name: Install xrdp packages
+  apt:
+    name: xrdp
+    state: present
+
+- name: home xsession file
+  copy:
+    src: xsession
+    dest: /home/{{ansible_user}}/.xsession
+    owner: "{{ansible_user}}"
+    group: "{{ansible_user}}"
+
+- name: global xsession file
+  become: yes
+  copy:
+    src: xsession
+    dest: /etc/skel/.xsession
 
 - name: Enable and start xrdp service
   systemd:
     name: xrdp
     state: started
     enabled: yes
+
+- name: Modify network connection to allow RDP
+  community.general.nmcli:
+    conn_name: "{{ Wifi.SSID }}"
+    autoconnect: True
+    state: present

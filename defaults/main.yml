@@ -1,5 +1,5 @@
 ---
-xrdp_packages:
-  - xrdp
-xrdp_ports:
-  - 3389/tcp
+Wifi:
+  SSID: test1SSID
+  PSK: test1PSK
+  UUID: d6a6e86a-d02d-44af-9b4a-1de658d98320
